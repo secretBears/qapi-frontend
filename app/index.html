@@ -22,8 +22,40 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
+    <header ng-class="{blur: !menuhidden}">
+      <nav class="navbar" role="navigation">
+        <span class="navbar-left qapi-font toggleMenu" ng-click="toggleMenu()">&#xe600;</span>
+        <span class="title">QAPI</span>
+        <div class="clear"></div>
+      </nav>
+    </header>
+
     <!-- Add your site or application content here -->
-    <div class="container" ng-view=""></div>
+    <div class="container" ng-view="" ng-class="{blur: !menuhidden}"></div>
+
+    <footer ng-class="{blur: !menuhidden}">
+
+    </footer>
+
+    <div class="menu-container" ng-class="{show: !menuhidden}">
+        <div class="menu-container-content">
+            <div class="menu-header">
+              <span class="navbar-left qapi-font toggleMenu" ng-click="toggleMenu()">&#xe600;</span>
+              <div class="menu-logo">Qapi</div>
+              <div class="clear"></div>
+            </div>
+            <div class="user-data">
+              <span class="user-img"></span>
+              <span class="name">Justin Bieber</span>
+              <div class="clear"></div>
+            </div>
+            <nav class="menu-links">
+                <a href="#about" ng-click="toggleMenu()"><div class="hoverlink"></div>About</a>
+                <a href="#quit" ng-click="toggleMenu()"><div class="hoverlink"></div>Quit Game</a>
+                <a href="#logout" ng-click="toggleMenu()"><div class="hoverlink"></div>Logout</a>
+            </nav>
+        </div>
+    </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>

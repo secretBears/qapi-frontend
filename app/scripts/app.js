@@ -7,13 +7,24 @@ angular
     'ngSanitize',
     'ngRoute'
   ])
-  .config(function ($routeProvider) {
+  .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/about/', {
+        templateUrl: 'views/about.html',
+        controller: 'MainCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
-  });
+  }])
+  .run(['$rootScope', function($rootScope){
+    $rootScope.menuhidden = true;
+
+    $rootScope.toggleMenu = function(){
+      $rootScope.menuhidden = !$rootScope.menuhidden;
+    };
+  }]);
