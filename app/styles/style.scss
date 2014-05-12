@@ -37,6 +37,10 @@ header{
   left: 0;
   right: 0;
   z-index: 1000;
+
+  .logo{
+    height: 50px;
+  }
 }
 
 .toggleMenu{
@@ -256,6 +260,10 @@ header{
 
     .toggleMenu{
       display: none;
+    }
+
+    .blur{
+      filter: none;
     }
 
     .container{

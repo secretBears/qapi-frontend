@@ -23,6 +23,7 @@ angular
   }])
   .run(['$rootScope', function($rootScope){
     $rootScope.menuhidden = true;
+    $rootScope.username = 'Justin Bieber';
 
     $rootScope.toggleMenu = function(){
       $rootScope.menuhidden = !$rootScope.menuhidden;
