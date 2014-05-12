@@ -6,7 +6,6 @@ angular.module('qapiFrontendApp')
 
 		$scope.questioncount = 1;
 		$scope.numberofquestions = 10;
-		$scope.menuhidden = true;
 
 		$scope.getNewQuestion = function(){
 			$http({method: 'GET', url: 'http://qapi.herokuapp.com/api/'})
@@ -25,11 +24,6 @@ angular.module('qapiFrontendApp')
 				$scope.getNewQuestion();
 				$scope.questioncount++;
 			}
-		};
-
-		$scope.toggleMenu = function(){
-			$scope.menuhidden = !$scope.menuhidden;
-			console.log('toggleMenu');
 		};
 
 		$scope.getNewQuestion();
