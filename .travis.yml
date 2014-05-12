@@ -13,3 +13,4 @@ deploy:
   app: qapi-frontend
   on:
     repo: secretBears/qapi-frontend
+    branch: master
