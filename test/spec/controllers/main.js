@@ -37,4 +37,19 @@ describe('Controller: MainCtrl', function () {
     expect(typeof(scope.qapi) === 'object').toBe(true);
     expect(scope.qapi.answers.length).toBe(4);
   });
+
+  it('should set menuhidden to true at start', function(){
+    httpBackend.flush();
+    expect(scope.menuhidden).toBe(true);
+  });
+
+  it('should toggle menuhidden', function(){
+    httpBackend.flush();
+    expect(scope.menuhidden).toBe(true);
+    scope.toggleMenu();
+    expect(scope.menuhidden).toBe(false);
+    scope.toggleMenu();
+    expect(scope.menuhidden).toBe(true);
+  });
+
 });
