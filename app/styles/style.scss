@@ -48,6 +48,10 @@ header{
   font-size: 26px;
 }
 
+.blur{
+  filter: blur(2px);
+}
+
 .container{
   color: $black;
   height: 100%;
@@ -55,10 +59,6 @@ header{
   padding-top: 46px;
   padding-bottom: 120px;
   box-sizing: border-box;
-
-  &.blur{
-    filter: blur(2px);
-  }
 
   .content{
   }
