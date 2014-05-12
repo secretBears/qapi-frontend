@@ -17,12 +17,17 @@ angular
         templateUrl: 'views/about.html',
         controller: 'MainCtrl'
       })
+      .when('/finish/', {
+        templateUrl: 'views/finish.html',
+        controller: 'MainCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
   }])
   .run(['$rootScope', function($rootScope){
     $rootScope.menuhidden = true;
+    $rootScope.username = 'Justin Bieber';
 
     $rootScope.toggleMenu = function(){
       $rootScope.menuhidden = !$rootScope.menuhidden;

@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('qapiFrontendApp')
-  .controller('MainCtrl', ['$scope', '$http',
-	function ($scope, $http) {
+  .controller('MainCtrl', ['$scope', '$http', '$window',
+	function ($scope, $http, $window) {
 
 		$scope.questioncount = 1;
 		$scope.numberofquestions = 10;
+		$scope.rightQuestions = 0;
 
 		$scope.getNewQuestion = function(){
 			$http({method: 'GET', url: 'http://qapi.herokuapp.com/api/'})
@@ -20,9 +21,13 @@ angular.module('qapiFrontendApp')
 		$scope.giveAnswer = function(answer){
 			console.log(answer);
 			//check Answer
+
 			if($scope.questioncount < $scope.numberofquestions){
 				$scope.getNewQuestion();
 				$scope.questioncount++;
+			}
+			else{
+				$window.location.href = '/#/finish';
 			}
 		};
 
