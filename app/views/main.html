@@ -9,7 +9,10 @@
     </div>
   </div>
   <div class="row answers">
-      <div ng-repeat="answer in game.question.answers" ng-click="game.giveAnswer(answer.answer)" class="col-xs-6 answer">
+      <div ng-repeat="answer in game.question.answers"
+            ng-click="game.giveAnswer(answer.answer, $index)"
+            ng-class="{selectedAnswer: $index==game.selectedAnswer, rightAnswer: $index==game.indexOfRightAnswer}"
+            class="answer">
         <div>{{answer.answer}}</div>
       </div>
   </div>

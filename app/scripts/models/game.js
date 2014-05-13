@@ -1,18 +1,20 @@
 'use strict';
 
-angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', function($http, $window){
+angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout', function($http, $window, $timeout){
 	var instance;
 
 	var Game = function Game(){
 		this.numberofquestions = 10;
 		this.rightQuestions = 0;
 		this.givenAnswers = [];
-		this.questioncount = 0;
+		this.questioncount = 1;
 		this.question = {};
 	};
 
 	Game.prototype.getNewQuestion = function(){
 		var scope = this;
+		scope.selectedAnswer = -1;
+		scope.indexOfRightAnswer = -1;
 
 		$http({method: 'GET', url: 'http://qapi.herokuapp.com/api/'})
 	    .success(function(data) {
@@ -25,38 +27,42 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', function(
 			});
 	};
 
-	Game.prototype.giveAnswer = function(answer){
+	Game.prototype.giveAnswer = function(answer, index){
+		var scope = this;
+		console.log(index);
+		scope.selectedAnswer = index;
+
 		var givenAnswer = {};
-		givenAnswer.question = this.question.question;
+		givenAnswer.question = scope.question.question;
 		givenAnswer.answer = answer;
 
 		//check Answer
-		var isTrue = false;
-		for(var i=0; i<this.question.answers.length; i++){
-			var a = this.question.answers[i];
+		var rightAnswer;
+		for(var i=0; i<scope.question.answers.length; i++){
+			var a = scope.question.answers[i];
 			if(a.isTrue){
-				givenAnswer.rightAnswer = a.answer;
-			}
-			if(a.answer === answer){
-				isTrue = a.isTrue;
+				rightAnswer = a.answer;
+				scope.indexOfRightAnswer = i;
 			}
 		}
 
-		givenAnswer.isTrue = isTrue;
-
-		this.givenAnswers.push(givenAnswer);
-
-		if(isTrue){
-			this.rightQuestions++;
+		if(answer === rightAnswer){
+			scope.rightQuestions++;
 		}
 
-		if(this.questioncount < this.numberofquestions - 1){
-			this.getNewQuestion();
-			this.questioncount++;
-		}
-		else{
-			$window.location.href = '/#/finish';
-		}
+		givenAnswer.isTrue = (answer === rightAnswer);
+		givenAnswer.rightAnswer = rightAnswer;
+		scope.givenAnswers.push(givenAnswer);
+
+		$timeout(function(){
+			if(scope.questioncount < scope.numberofquestions){
+				scope.getNewQuestion();
+				scope.questioncount++;
+			}
+			else{
+				$window.location.href = '/#/finish';
+			}
+		}, 2000);
 	};
 
 	if(!instance){

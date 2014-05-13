@@ -146,6 +146,14 @@ header{
         color: $white;
         cursor: pointer;
       }
+
+      &.selectedAnswer{
+        background-color: red;
+      }
+
+      &.rightAnswer{
+        background-color: green;
+      }
     }
   }
 }
