@@ -13,6 +13,6 @@
             ng-click="game.giveAnswer(answer.answer, $index)"
             ng-class="{selectedAnswer: $index==game.selectedAnswer, rightAnswer: $index==game.indexOfRightAnswer}"
             class="answer">
-        <div>{{answer.answer}}</div>
+        {{answer.answer}}
       </div>
   </div>

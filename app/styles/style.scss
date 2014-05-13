@@ -9,6 +9,8 @@ $red:       #ff5353;
 $green:     #4bbf63;
 
 $content-padding-left-right: 10px;
+$header-height: 55px;
+$answers-height: 125px;
 
 @font-face{
   font-family: qapiFont;
@@ -41,6 +43,11 @@ header{
   left: 0;
   right: 0;
   z-index: 1000;
+  height: $header-height;
+
+  nav{
+    height: 100%;
+  }
 
   .logo{
     height: 50px;
@@ -83,8 +90,8 @@ header{
   color: $black;
   height: 100%;
   padding:0;
-  padding-top: 56px;
-  padding-bottom: 120px;
+  padding-top: $header-height;
+  padding-bottom: $answers-height;
   box-sizing: border-box;
   position: relative;
 
@@ -137,12 +144,13 @@ header{
     bottom: 0;
     left: 0;
     right: 0;
+    height: $answers-height;
 
     .answer{
       display: inline-block;
       width: 50%;
       box-sizing: border-box;
-      padding: 20px 0;
+      height: 50%;
       text-align: center;
       background-color: $white;
       border: 1px solid #f0f0f0;
