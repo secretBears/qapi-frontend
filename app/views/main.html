@@ -1,15 +1,15 @@
 
   <div class="question">
     <div class="question-text">
-      <span>{{qapi.question}}</span>
+      <span>{{game.question.question}}</span>
     </div>
-    <span class="question-count">Question {{questioncount}}/{{game.numberofquestions}}</span>
+    <span class="question-count">Question {{game.questioncount}}/{{game.numberofquestions}}</span>
     <div class="question-timeline">
-      <div ng-style="{width: 100*questioncount/game.numberofquestions+'%'}" class="question-timeline-done"></div>
+      <div ng-style="{width: 100*game.questioncount/game.numberofquestions+'%'}" class="question-timeline-done"></div>
     </div>
   </div>
   <div class="row answers">
-      <div ng-repeat="answer in qapi.answers" ng-click="giveAnswer(answer.answer)" class="col-xs-6 answer">
+      <div ng-repeat="answer in game.question.answers" ng-click="game.giveAnswer(answer.answer)" class="col-xs-6 answer">
         <div>{{answer.answer}}</div>
       </div>
   </div>

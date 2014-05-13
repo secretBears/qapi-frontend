@@ -1,1 +1,7 @@
 {{game.rightQuestions}} von {{game.numberofquestions}}
+
+<div ng-repeat="givenAnswer in game.givenAnswers">
+    <div>{{givenAnswer.question}}: {{givenAnswer.isTrue}}</div>
+    <div>Your Answer: {{givenAnswer.answer}}</div>
+    <div>Right Answer: {{givenAnswer.rightAnswer}}</div>
+</div>
