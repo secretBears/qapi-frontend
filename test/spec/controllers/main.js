@@ -31,11 +31,17 @@ describe('Controller: MainCtrl', function () {
     httpBackend.flush();
   });
 
+  it('should create an instance of Game', function(){
+    httpBackend.flush();
+    expect(angular.isUndefined(scope.game)).toBe(false);
+  });
+
   it('should respond a question with 4 answers', function(){
     httpBackend.flush();
-    expect(angular.isUndefined(scope.qapi)).toBe(false);
-    expect(typeof(scope.qapi) === 'object').toBe(true);
-    expect(scope.qapi.answers.length).toBe(4);
+    var question = scope.game.question;
+    expect(angular.isUndefined(question)).toBe(false);
+    expect(typeof(question) === 'object').toBe(true);
+    expect(question.answers.length).toBe(4);
   });
 
   it('should set menuhidden to true at start', function(){
