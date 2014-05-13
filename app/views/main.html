@@ -3,9 +3,9 @@
     <div class="question-text">
       <span>{{qapi.question}}</span>
     </div>
-    <span class="question-count">Question {{questioncount}}/{{numberofquestions}}</span>
+    <span class="question-count">Question {{questioncount}}/{{game.numberofquestions}}</span>
     <div class="question-timeline">
-      <div ng-style="{width: 100*questioncount/numberofquestions+'%'}" class="question-timeline-done"></div>
+      <div ng-style="{width: 100*questioncount/game.numberofquestions+'%'}" class="question-timeline-done"></div>
     </div>
   </div>
   <div class="row answers">
