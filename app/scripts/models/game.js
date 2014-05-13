@@ -9,12 +9,14 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 		this.givenAnswers = [];
 		this.questioncount = 1;
 		this.question = {};
+		this.questionGiven = true;
 	};
 
 	Game.prototype.getNewQuestion = function(){
 		var scope = this;
 		scope.selectedAnswer = -1;
 		scope.indexOfRightAnswer = -1;
+		scope.questionGiven = false;
 
 		$http({method: 'GET', url: 'http://qapi.herokuapp.com/api/'})
 	    .success(function(data) {
@@ -29,7 +31,12 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 
 	Game.prototype.giveAnswer = function(answer, index){
 		var scope = this;
-		console.log(index);
+
+		if(scope.questionGiven){
+			return;
+		}
+		this.questionGiven = true;
+
 		scope.selectedAnswer = index;
 
 		var givenAnswer = {};
