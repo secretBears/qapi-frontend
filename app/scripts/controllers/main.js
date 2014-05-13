@@ -16,7 +16,7 @@ angular.module('qapiFrontendApp').controller('MainCtrl', ['$scope', '$http', '$w
 		    .error(function() {
 		      console.log('ERROR: fetching data from QAPI');
 		      //TODO: remove fallback
-		      $scope.qapi = {'id':20,'question':'Frage 20','place':'Linz', 'answers':[{'answer':'20 answer 1','is_true':false},{'answer':'20 answer 2','is_true':true},{'answer':'20 answer 3', 'is_true':false},{'answer':'20 answer 4','is_true':false}]};
+		      $scope.qapi = {'id':20,'question':'Frage 20','place':'Linz', 'answers':[{'answer':'20 answer 1','isTrue':false},{'answer':'20 answer 2','isTrue':true},{'answer':'20 answer 3', 'isTrue':false},{'answer':'20 answer 4','isTrue':false}]};
 				});
 		};
 
@@ -25,7 +25,7 @@ angular.module('qapiFrontendApp').controller('MainCtrl', ['$scope', '$http', '$w
 			//check Answer
 			for(var i=0; i<$scope.qapi.answers.length; i++){
 				var a = $scope.qapi.answers[i];
-				if(a.answer === answer && a.is_true){
+				if(a.answer === answer && a.isTrue){
 					$scope.game.rightQuestions++;
 					break;
 				}
