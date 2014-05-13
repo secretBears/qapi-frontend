@@ -3,6 +3,7 @@ node_js:
 - '0.10'
 before_script:
 # install other dependencies
+- mv .travis.gitignore .gitignore
 - gem update --system
 - gem install compass
 - npm install phantomjs -g
@@ -17,3 +18,5 @@ deploy:
   on:
     repo: secretBears/qapi-frontend
     branch: master
+    run:
+    - grunt
