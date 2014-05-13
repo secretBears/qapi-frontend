@@ -19,7 +19,7 @@ angular
       })
       .when('/finish/', {
         templateUrl: 'views/finish.html',
-        controller: 'MainCtrl'
+        controller: 'GameCtrl'
       })
       .otherwise({
         redirectTo: '/'

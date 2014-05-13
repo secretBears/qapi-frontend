@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('qapiFrontendApp')
-  .controller('MainCtrl', ['$scope', '$http', '$window',
-	function ($scope, $http, $window) {
+angular.module('qapiFrontendApp').controller('MainCtrl', ['$scope', '$http', '$window', 'Game',
+	function ($scope, $http, $window, Game) {
 
+		$scope.game = Game;
 		$scope.questioncount = 1;
-		$scope.numberofquestions = 10;
-		$scope.rightQuestions = 0;
+		$scope.game.numberofquestions = 10;
+		$scope.game.rightQuestions = 0;
 
 		$scope.getNewQuestion = function(){
 			$http({method: 'GET', url: 'http://qapi.herokuapp.com/api/'})
@@ -15,14 +15,23 @@ angular.module('qapiFrontendApp')
 		    })
 		    .error(function() {
 		      console.log('ERROR: fetching data from QAPI');
+		      //TODO: remove fallback
+		      $scope.qapi = {'id':20,'question':'Frage 20','place':'Linz', 'answers':[{'answer':'20 answer 1','is_true':false},{'answer':'20 answer 2','is_true':true},{'answer':'20 answer 3', 'is_true':false},{'answer':'20 answer 4','is_true':false}]};
 				});
 		};
 
 		$scope.giveAnswer = function(answer){
 			console.log(answer);
 			//check Answer
+			for(var i=0; i<$scope.qapi.answers.length; i++){
+				var a = $scope.qapi.answers[i];
+				if(a.answer === answer && a.is_true){
+					$scope.game.rightQuestions++;
+					break;
+				}
+			}
 
-			if($scope.questioncount < $scope.numberofquestions){
+			if($scope.questioncount < $scope.game.numberofquestions){
 				$scope.getNewQuestion();
 				$scope.questioncount++;
 			}
