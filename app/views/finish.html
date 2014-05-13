@@ -1,7 +1,10 @@
-{{game.rightQuestions}} von {{game.numberofquestions}}
 
-<div ng-repeat="givenAnswer in game.givenAnswers" class="row">
-    <div>{{givenAnswer.question}}: {{givenAnswer.isTrue}}</div>
-    <div>Your Answer: {{givenAnswer.answer}}</div>
-    <div>Right Answer: {{givenAnswer.rightAnswer}}</div>
+<div class="padding-container">
+	<h3 class="result">Result: {{game.rightQuestions}} / {{game.numberofquestions}} ({{100 * game.rightQuestions / game.numberofquestions}}%)</h3>
+
+	<div ng-repeat="givenAnswer in game.givenAnswers" class="result-{{givenAnswer.isTrue}} row">
+	    <div class="row-question">{{givenAnswer.question}}</div>
+	    <div class="row-yanswer">Your Answer: {{givenAnswer.answer}}</div>
+	    <div class="row-ranswer">Right Answer: {{givenAnswer.rightAnswer}}</div>
+	</div>
 </div>

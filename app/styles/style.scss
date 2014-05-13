@@ -5,6 +5,10 @@ $white:     #ffffff;
 $grey:      #808080;
 $darkgrey:  #202020;
 $blue:      #29aaff;
+$red:       #ff5353;
+$green:     #4bbf63;
+
+$content-padding-left-right: 10px;
 
 @font-face{
   font-family: qapiFont;
@@ -54,6 +58,25 @@ header{
 
 .blur{
   filter: blur(2px);
+}
+
+.padding-container{
+  padding: $content-padding-left-right;
+}
+
+.row{
+  padding: 5px $content-padding-left-right;
+  margin-left: -$content-padding-left-right;
+  margin-right: -$content-padding-left-right;
+  border-top: 1px solid $grey;
+
+  &.result-true{
+    background-color: $green;
+  }
+
+  &.result-false{
+    background-color: $red;
+  }
 }
 
 .container{
@@ -148,11 +171,11 @@ header{
       }
 
       &.selectedAnswer{
-        background-color: red;
+        background-color: $red;
       }
 
       &.rightAnswer{
-        background-color: green;
+        background-color: $green;
       }
     }
   }
