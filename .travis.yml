@@ -8,7 +8,7 @@ before_script:
 - npm install phantomjs -g
 - npm install -g bower grunt-cli
 - bower install
-- grunt
+- grunt test
 deploy:
   provider: heroku
   api_key:
@@ -17,3 +17,5 @@ deploy:
   on:
     repo: secretBears/qapi-frontend
     branch: master
+    run:
+    - grunt
