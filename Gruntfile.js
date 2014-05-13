@@ -390,6 +390,8 @@ module.exports = function (grunt) {
     ]);
   });
 
+  grunt.loadNpmTasks('grunt-karma');
+
   grunt.registerTask('server', function (target) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve:' + target]);
