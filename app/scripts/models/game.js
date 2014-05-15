@@ -10,6 +10,17 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 		this.questioncount = 1;
 		this.question = {};
 		this.questionGiven = true;
+		this.coords = {};
+	};
+
+	Game.prototype.init = function(){
+		var scope = this;
+		navigator.geolocation.getCurrentPosition(
+			function(data){
+				scope.coords = data.coords;
+				scope.getNewQuestion();
+			}
+		);
 	};
 
 	Game.prototype.getNewQuestion = function(){
@@ -18,7 +29,12 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 		scope.indexOfRightAnswer = -1;
 		scope.questionGiven = false;
 
-		$http({method: 'GET', url: 'http://qapi.herokuapp.com/api/'})
+		var lat = scope.coords.latitude;
+		var lon = scope.coords.longitude;
+
+		var url = 'http://qapi.herokuapp.com/api/' + lat + '/' + lon;
+
+		$http({method: 'GET', url: url})
 	    .success(function(data) {
 	      scope.question = data;
 	    })

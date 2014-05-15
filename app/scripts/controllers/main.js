@@ -4,6 +4,6 @@ angular.module('qapiFrontendApp').controller('MainCtrl', ['$scope', '$http', '$w
 	function ($scope, $http, $window, Game) {
 
 		$scope.game = Game;
-		$scope.game.getNewQuestion();
+		$scope.game.init();
 	}
   ]);
