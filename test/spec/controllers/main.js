@@ -8,7 +8,7 @@ describe('Controller: MainCtrl', function () {
   var MainCtrl,
       scope,
       httpBackend,
-      url = 'http://qapi.herokuapp.com/api/';
+      url = 'http://qapi.herokuapp.com/api/47.7241255/13.0865897';
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope, $injector) {

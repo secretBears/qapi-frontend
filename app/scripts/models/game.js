@@ -1,9 +1,14 @@
 'use strict';
 
-angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout', function($http, $window, $timeout){
+angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout', '$rootScope',
+	function($http, $window, $timeout, $rootScope){
 	var instance;
 
 	var Game = function Game(){
+		this.reset();
+	};
+
+	Game.prototype.reset = function(){
 		this.numberofquestions = 10;
 		this.rightQuestions = 0;
 		this.givenAnswers = [];
@@ -11,16 +16,24 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 		this.question = {};
 		this.questionGiven = true;
 		this.coords = {};
+		this.loading = 0;
 	};
 
 	Game.prototype.init = function(){
 		var scope = this;
-		navigator.geolocation.getCurrentPosition(
-			function(data){
-				scope.coords = data.coords;
-				scope.getNewQuestion();
-			}
-		);
+		//TODO refactor
+		if(navigator.geolocation){
+			navigator.geolocation.getCurrentPosition(
+				function(data){
+					scope.coords = data.coords;
+					scope.getNewQuestion();
+				}
+			);
+		}
+		else{
+			scope.coords = {latitude: 47.7241255, longitude: 13.0865897};
+			scope.getNewQuestion();
+		}
 	};
 
 	Game.prototype.getNewQuestion = function(){
@@ -28,19 +41,23 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 		scope.selectedAnswer = -1;
 		scope.indexOfRightAnswer = -1;
 		scope.questionGiven = false;
+		$rootScope.isPlaying = true;
 
 		var lat = scope.coords.latitude;
 		var lon = scope.coords.longitude;
 
 		var url = 'http://qapi.herokuapp.com/api/' + lat + '/' + lon;
 
+		scope.loading++;
 		$http({method: 'GET', url: url})
 	    .success(function(data) {
 	      scope.question = data;
+	      scope.loading--;
 	    })
 	    .error(function() {
 	      console.log('ERROR: fetching data from QAPI');
 	      //TODO: remove fallback
+	      scope.loading--;
 	      scope.question = {'id':20,'question':'Frage 20','place':'Linz', 'answers':[{'answer':'20 answer 1','isTrue':false},{'answer':'20 answer 2','isTrue':true},{'answer':'20 answer 3', 'isTrue':false},{'answer':'20 answer 4','isTrue':false}]};
 			});
 	};
@@ -83,9 +100,10 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 				scope.questioncount++;
 			}
 			else{
+				$rootScope.isPlaying = false;
 				$window.location.href = '/#/finish';
 			}
-		}, 2000);
+		}, 200);
 	};
 
 	if(!instance){

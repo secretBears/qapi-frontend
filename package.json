@@ -36,7 +36,8 @@
     "karma-jasmine": "^0.1.5",
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-ng-html2js-preprocessor": "^0.1.0",
-    "phantomjs": "^1.9.7-5"
+    "phantomjs": "^1.9.7-5",
+    "angular-loading-bar": ">=0.4.2"
   },
   "engines": {
     "node": ">=0.10.0"

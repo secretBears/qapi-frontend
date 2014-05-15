@@ -8,9 +8,10 @@ $blue:      #29aaff;
 $red:       #ff5353;
 $green:     #4bbf63;
 
-$content-padding-left-right: 10px;
+$container-padding-left-right: 20px;
 $header-height: 55px;
 $answers-height: 125px;
+$loading-height: 10em;
 
 @font-face{
   font-family: qapiFont;
@@ -35,6 +36,25 @@ body {
 
 .qapi-font{
   font-family: qapiFont;
+}
+
+.qapi-button{
+  color: white;
+  background-color: $blue;
+  width: 100%;
+  line-height: 3em;
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 2px;
+
+  &:hover{
+    background-color: $blue/1.1;
+  }
+
+  &:active{
+    box-shadow: inset 0 0 12px 0px $grey;
+  }
 }
 
 header{
@@ -67,14 +87,10 @@ header{
   filter: blur(2px);
 }
 
-.padding-container{
-  padding: $content-padding-left-right;
-}
-
 .row{
-  padding: 5px $content-padding-left-right;
-  margin-left: -$content-padding-left-right;
-  margin-right: -$content-padding-left-right;
+  padding: 5px $container-padding-left-right;
+  margin-left: -$container-padding-left-right;
+  margin-right: -$container-padding-left-right;
   border-top: 1px solid $grey;
 
   &.result-true{
@@ -86,6 +102,40 @@ header{
   }
 }
 
+.hide{
+  display: none;
+}
+
+#loading-bar-spinner{
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: $loading-height;
+  height: $loading-height;
+  margin-left: -$loading-height/2;
+  margin-top: -$loading-height/2;
+
+  .spinner-icon{
+    height: 100%;
+    width: 100%;
+    border: 5px solid transparent;
+    border-radius: $loading-height;
+    border-top: 5px solid $blue;
+    border-bottom: 5px solid $blue;
+    border-left: 5px solid $blue;
+    animation: loading-animation 600ms linear infinite;
+  }
+}
+
+@keyframes loading-animation{
+  0%: {
+    transform: rotate(0deg);
+  }
+  100%: {
+    transform: rotate(360deg);
+  }
+}
+
 .container{
   color: $black;
   height: 100%;
@@ -94,6 +144,8 @@ header{
   padding-bottom: $answers-height;
   box-sizing: border-box;
   position: relative;
+  padding-left: 20px;
+  padding-right: 20px;
 
   .content{
   }
@@ -101,6 +153,7 @@ header{
   .question{
     position: relative;
     height: 100%;
+    margin: 0 -20px;
 
     .question-text{
       height: 100%;
@@ -264,6 +317,10 @@ header{
       color: $grey;
       text-decoration: none;
       position: relative;
+
+      &.hide{
+        display: none;
+      }
 
       .hoverlink{
         display: none;
