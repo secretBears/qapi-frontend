@@ -18,7 +18,7 @@ describe('Controller: PlayCtrl', function () {
   var PlayCtrl,
       scope,
       httpBackend,
-      url = 'http://qapi.herokuapp.com/api/47.7241255/13.0865897';
+      url = 'http://qapi.herokuapp.com/api/47.7241255/13.0865897?token=e9c69cbfb8fc2cb1eb3eb637f6a07b26';
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope, $injector) {

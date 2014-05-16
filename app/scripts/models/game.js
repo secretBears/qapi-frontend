@@ -38,17 +38,30 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 		var lat = scope.coords.latitude;
 		var lon = scope.coords.longitude;
 
-		var url = 'http://qapi.herokuapp.com/api/' + lat + '/' + lon;
+		var token = 'e9c69cbfb8fc2cb1eb3eb637f6a07b26';
+		var url = 'http://qapi.herokuapp.com/api/' + lat + '/' + lon + '?token=' + token;
 
 		$http({method: 'GET', url: url})
-	    .success(function(data) {
-	      scope.question = data;
-	    })
-	    .error(function() {
-	      console.log('ERROR: fetching data from QAPI');
-	      //TODO: remove fallback
-	      scope.question = {'id':20,'question':'Frage 20','place':'Linz', 'answers':[{'answer':'20 answer 1','isTrue':false},{'answer':'20 answer 2','isTrue':true},{'answer':'20 answer 3', 'isTrue':false},{'answer':'20 answer 4','isTrue':false}]};
-			});
+	    .success(
+			function(data) {
+				if(!scope.checkRespon(data)){
+					console.log('ERROR: getting wrong data');
+					//TODO: remove fallback
+					scope.question = scope.setFallbackQuestions();
+					console.log(scope.question);
+					return;
+				}
+				scope.question = data;
+			}
+		)
+	    .error(
+			function() {
+				console.log('ERROR: fetching data from QAPI');
+				//TODO: remove fallback
+				scope.question = scope.setFallbackQuestions();
+				console.log(scope.question);
+			}
+	    );
 	};
 
 	Game.prototype.giveAnswer = function(answer, index){
@@ -92,7 +105,25 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 				$rootScope.isPlaying = false;
 				$window.location.href = '/#/finish';
 			}
-		}, 200);
+		}, 2000);
+	};
+
+	Game.prototype.checkRespon = function(data){
+		return (Object.prototype.toString.call(data) === '[object Object]') &&
+			(typeof data.error === 'undefined');
+	};
+
+	Game.prototype.setFallbackQuestions = function(){
+		var questions = [
+			{'question':'Welchen Beruf hat Eberhard Hopf','answers':[{'answer':'Singer, Actor','isTrue':false},{'answer':'Architect','isTrue':false},{'answer':'Politician','isTrue':false},{'answer':'Mathematician','isTrue':true}]},
+			{'question':'Welchen Beruf hat Richard Tauber','answers':[{'answer':'Mathematician','isTrue':false},{'answer':'Architect','isTrue':false},{'answer':'Politician','isTrue':false},{'answer':'Singer, Actor','isTrue':true}]},
+			{'question':'Welchen Beruf hat Richard Neutra','answers':[{'answer':'Politician','isTrue':false},{'answer':'Mathematician','isTrue':false},{'answer':'Architect','isTrue':true},{'answer':'Singer, Actor','isTrue':false}]},
+			{'question':'Welche Art von Musik spielt Wolfgang Amadeus Mozart','answers':[{'answer':'Musical improvisation','isTrue':false},{'answer':'Classical music','isTrue':true},{'answer':'Hard rock','isTrue':false},{'answer':'Serialism','isTrue':false}]},
+			{'question':'Welche Art von Musik spielt Anton Webern','answers':[{'answer':'Musical improvisation','isTrue':false},{'answer':'Classical music','isTrue':false},{'answer':'Serialism','isTrue':true},{'answer':'Hard rock','isTrue':false}]},
+			{'question':'Welche Art von Musik spielt Dealer','answers':[{'answer':'Serialism','isTrue':false},{'answer':'Classical music','isTrue':false},{'answer':'Hard rock','isTrue':true},{'answer':'Musical improvisation','isTrue':false}]}
+		];
+		var rand = Math.floor(Math.random()*questions.length);
+		return questions[rand];
 	};
 
 	if(!instance){
