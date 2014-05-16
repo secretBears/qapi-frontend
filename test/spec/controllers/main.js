@@ -1,19 +1,34 @@
 'use strict';
 
-describe('Controller: MainCtrl', function () {
+function addFunctionToNavigator(){
+  navigator.geolocation = {
+    getCurrentPosition: function(success){
+      var lat = 47.7241255;
+      var lon = 13.0865897;
+      success({coords: {latitude: lat, longitude: lon}});
+    }
+  };
+}
+
+describe('Controller: PlayCtrl', function () {
 
   // load the controller's module
   beforeEach(module('qapiFrontendApp'));
 
-  var MainCtrl,
+  var PlayCtrl,
       scope,
       httpBackend,
       url = 'http://qapi.herokuapp.com/api/47.7241255/13.0865897';
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope, $injector) {
+    //TODO: find a better way
+    addFunctionToNavigator();
+    //Try it with spyOn
+    //spyOn(navigator, 'geolocation.getCurrentPosition').andReturn({coords: {latitude: 47.7241255, longitude: 13.0865897}});
+
     scope = $rootScope.$new();
-    MainCtrl = $controller('MainCtrl', {
+    PlayCtrl = $controller('PlayCtrl', {
       $scope: scope
     });
 

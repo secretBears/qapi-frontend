@@ -21,19 +21,12 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 
 	Game.prototype.init = function(){
 		var scope = this;
-		//TODO refactor
-		if(navigator.geolocation){
-			navigator.geolocation.getCurrentPosition(
-				function(data){
-					scope.coords = data.coords;
-					scope.getNewQuestion();
-				}
-			);
-		}
-		else{
-			scope.coords = {latitude: 47.7241255, longitude: 13.0865897};
-			scope.getNewQuestion();
-		}
+		navigator.geolocation.getCurrentPosition(
+			function(data){
+				scope.coords = data.coords;
+				scope.getNewQuestion();
+			}
+		);
 	};
 
 	Game.prototype.getNewQuestion = function(){
