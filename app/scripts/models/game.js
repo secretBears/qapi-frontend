@@ -16,7 +16,6 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 		this.question = {};
 		this.questionGiven = true;
 		this.coords = {};
-		this.loading = 0;
 	};
 
 	Game.prototype.init = function(){
@@ -41,16 +40,13 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 
 		var url = 'http://qapi.herokuapp.com/api/' + lat + '/' + lon;
 
-		scope.loading++;
 		$http({method: 'GET', url: url})
 	    .success(function(data) {
 	      scope.question = data;
-	      scope.loading--;
 	    })
 	    .error(function() {
 	      console.log('ERROR: fetching data from QAPI');
 	      //TODO: remove fallback
-	      scope.loading--;
 	      scope.question = {'id':20,'question':'Frage 20','place':'Linz', 'answers':[{'answer':'20 answer 1','isTrue':false},{'answer':'20 answer 2','isTrue':true},{'answer':'20 answer 3', 'isTrue':false},{'answer':'20 answer 4','isTrue':false}]};
 			});
 	};
