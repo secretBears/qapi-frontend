@@ -1,0 +1,18 @@
+
+  <div class="question">
+    <div class="question-text">
+      <span>{{game.question.question}}</span>
+    </div>
+    <span class="question-count">Question {{game.questioncount}}/{{game.numberofquestions}}</span>
+    <div class="question-timeline">
+      <div ng-style="{width: 100*game.questioncount/game.numberofquestions+'%'}" class="question-timeline-done"></div>
+    </div>
+  </div>
+  <div class="answers">
+      <div ng-repeat="answer in game.question.answers"
+            ng-click="game.giveAnswer(answer.answer, $index)"
+            ng-class="{selectedAnswer: $index==game.selectedAnswer, rightAnswer: $index==game.indexOfRightAnswer}"
+            class="answer">
+        {{answer.answer}}
+      </div>
+  </div>

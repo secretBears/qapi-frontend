@@ -1,4 +1,3 @@
-
 $lightgrey: #d0d0d0;
 $black:     #000000;
 $white:     #ffffff;
@@ -7,10 +6,13 @@ $darkgrey:  #202020;
 $blue:      #29aaff;
 $red:       #ff5353;
 $green:     #4bbf63;
+$lightred:  #fdd5d5;
+$lightgreen:#e6ffe9;
 
-$content-padding-left-right: 10px;
+$container-padding-left-right: 20px;
 $header-height: 55px;
 $answers-height: 125px;
+$loading-height: 10em;
 
 @font-face{
   font-family: qapiFont;
@@ -35,6 +37,25 @@ body {
 
 .qapi-font{
   font-family: qapiFont;
+}
+
+.qapi-button{
+  color: white;
+  background-color: $blue;
+  width: 100%;
+  line-height: 3em;
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 2px;
+
+  &:hover{
+    background-color: $blue/1.1;
+  }
+
+  &:active{
+    box-shadow: inset 0 0 12px 0px $grey;
+  }
 }
 
 header{
@@ -67,22 +88,68 @@ header{
   filter: blur(2px);
 }
 
-.padding-container{
-  padding: $content-padding-left-right;
-}
-
 .row{
-  padding: 5px $content-padding-left-right;
-  margin-left: -$content-padding-left-right;
-  margin-right: -$content-padding-left-right;
+  padding: 5px $container-padding-left-right;
+  margin-left: -$container-padding-left-right;
+  margin-right: -$container-padding-left-right;
   border-top: 1px solid $grey;
+  position: relative;
 
-  &.result-true{
-    background-color: $green;
+  .row-background{
+    background-repeat: no-repeat;
+    background-position: 100%;
+    background-size: 4em;
+    opacity:.50;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
   }
 
-  &.result-false{
-    background-color: $red;
+  &.result-true .row-background{
+    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAuMDA3OTk1NjEwMTI1MzYyODcgMTM2Ljc2MTAwMTU4NjkxNCAxMDcuOTkyMDA0Mzg5ODc1IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImRlZjAiIHgxPSIwLjUwMDAwNSIgeDI9IjAuNTAwMDA1IiB5MT0iMS42NDI0NiIgeTI9Ii0wLjEzOTQ5MyI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDA0NDAwIi8+PHN0b3Agb2Zmc2V0PSIwLjUxMDk4OSIgc3RvcC1jb2xvcj0iIzAxOEMwMSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzkxQ0Q5MSIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJkZWYxIiB4MT0iLTUuMzc0MjZFLTA2IiB4Mj0iMC45OTk5OTciIHkxPSIwLjQ5OTk5NiIgeTI9IjAuNDk5OTk2Ij48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNGRkZGRkYiIHN0eWxlPSJzdG9wLW9wYWNpdHk6MC4zMDE5NjA3ODQzMTM3MjUiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNGRkZGRkYiIHN0eWxlPSJzdG9wLW9wYWNpdHk6MC4yIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PGc+PHBhdGggZD0iTTUyLjk4NCwxMDhMMCw1NS4wMDggMjMuMjczMywzMS43MzIgNTIuOTg1Myw2MS40NDI3IDExNC40MzIsMC4wMDc5OTU2MSAxMzYuNzYxLDIyLjM0MTMgMTM0Ljg3NSwyNC4yMjY3IDExNC40MzIsMy43Nzg2NiA1Mi45ODUzLDY1LjIxMzMgMjMuMjczMywzNS41MDI3IDMuNzcwNjcsNTUuMDA4IDU0Ljg2OTMsMTA2LjExNSA1Mi45ODQsMTA4eiIgZmlsbD0iIzAwNjYwMCIvPjxwYXRoIGQ9Ik0xMzUuODE4LDIzLjI4NDVMMTE0LjQzMywxLjg5Mzg2IDUyLjk4NjQsNjMuMzI4NSAyMy4yNzMxLDMzLjYxNzkgMS44ODUwNyw1NS4wMDg1IDIxLjE3MzEsNzQuMjk2NSAzNC41MjI0LDg3LjY1MjUgNTMuOTI2NCwxMDcuMDU4IiBmaWxsPSJ1cmwoI2RlZjApIi8+PHBhdGggZD0iTTUyLjk4NjQsNjMuMzI3MkwyMy4yNzQ0LDMzLjYxNzkgMS44ODY0LDU1LjAwODUgMjEuMTczMSw3NC4yOTY1IDMyLjE4NzcsODUuMzE3OUM0Ny4zNDc3LDc1Ljk3MzksNzIuNTkxNyw2Mi45ODcyLDEwMS41MTcsNTguMzczOUwxMzUuODE4LDIzLjI4NDUgMTE0LjQzMywxLjg5Mzg2IDUyLjk4NjQsNjMuMzI3MnoiIGZpbGw9InVybCgjZGVmMSkiLz48L2c+PC9zdmc+');
+    background-color: $lightgreen;
+  }
+
+  &.result-false .row-background{
+    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIyLjU0MzEyOTk5NDU5MjE2RS0wNiAtMC4xOTQ2NTU5OTk1NDEyODMgMTEzLjUyNjk5Nzg4NDExNiAxMTMuNTI3NjU2MTgyNjQ3IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImRlZjAiIHgxPSIwLjQ5OTk5NSIgeDI9IjAuNDk5OTk1IiB5MT0iMS43Mzc3OUUtMDYiIHkyPSIxLjAwMDAxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNGMjdFNUUiLz48c3RvcCBvZmZzZXQ9IjAuNSIgc3RvcC1jb2xvcj0iI0VCMUMyNCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI0NFMjIyOSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxnPjxwYXRoIGQ9Ik0yLjU0MzEzRS0wNiw4Ny41MzQ3TDMwLjk2NCw1Ni41NjQgMi41NDMxM0UtMDYsMjUuNjAxMyAyNS43OTczLC0wLjE5NDY1NiA1Ni43NjI3LDMwLjc3MDcgODcuNzI2NywtMC4xOTQ2NTYgMTEzLjUyNywyNS42MDEzIDgyLjU2MjcsNTYuNTY5MyAxMTMuNTI3LDg3LjUzNDcgODcuNzI2NywxMTMuMzI5IDU2Ljc2NjcsODIuMzY0IDI1Ljc5NzMsMTEzLjMzMyAyLjU0MzEzRS0wNiw4Ny41MzQ3eiIgZmlsbD0iIzk5MDAwMCIvPjxwYXRoIGQ9Ik0xMTEuNjQxLDg3LjUzNDFMODAuNjc2OCw1Ni41NzAxIDExMS42NDEsMjUuNjAyMSA4Ny43MjYxLDEuNjkwMTQgNTYuNzYzNSwzMi42NTU1IDI1Ljc5NjgsMS42OTAxNCAxLjg4NDgsMjUuNjAyMSAzMi44NTAxLDU2LjU2NDggMS44ODQ4LDg3LjUzNDEgMjUuNzk2OCwxMTEuNDQ3IDU2Ljc2NzUsODAuNDc4MSA4Ny43MjYxLDExMS40NDMgMTExLjY0MSw4Ny41MzQxeiIgZmlsbD0idXJsKCNkZWYwKSIvPjxwYXRoIGQ9Ik01My41NTA3LDQyLjE1OTdDNjkuOTc3MywzNi45MTg0LDg2LjI5ODcsMzUuMDc4NCwxMDEuMDM2LDM2LjIwNzdMMTExLjY0LDI1LjYwMjQgODcuNzI2NywxLjY5MDQgNTYuNzYyNywzMi42NTU3IDI1Ljc5NzMsMS42OTA0IDEuODg1MzQsMjUuNjAyNCAyOS4wMzQ3LDUyLjc0OTFDMzYuNTE4Nyw0OC41NjUxLDQ0LjczODcsNDQuOTcxNyw1My41NTA3LDQyLjE1OTd6IiBmaWxsPSIjRkZGRkZGIiBzdHlsZT0iZmlsbC1vcGFjaXR5OjAuMTAxOTYwNzg0MzEzNzI1Ii8+PC9nPjwvc3ZnPg==');
+    background-color: $lightred;
+  }
+}
+
+.hide{
+  display: none;
+}
+
+#loading-bar-spinner{
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: $loading-height;
+  height: $loading-height;
+  margin-left: -$loading-height/2;
+  margin-top: -$loading-height/2;
+
+  .spinner-icon{
+    height: 100%;
+    width: 100%;
+    border: 5px solid transparent;
+    border-radius: $loading-height;
+    border-top: 5px solid $blue;
+    border-bottom: 5px solid $blue;
+    border-left: 5px solid $blue;
+    animation: loading-animation 600ms linear infinite;
+  }
+}
+
+@keyframes loading-animation{
+  0%: {
+    transform: rotate(0deg);
+  }
+  100%: {
+    transform: rotate(360deg);
   }
 }
 
@@ -94,6 +161,8 @@ header{
   padding-bottom: $answers-height;
   box-sizing: border-box;
   position: relative;
+  padding-left: 20px;
+  padding-right: 20px;
 
   .content{
   }
@@ -101,6 +170,7 @@ header{
   .question{
     position: relative;
     height: 100%;
+    margin: 0 -20px;
 
     .question-text{
       height: 100%;
@@ -264,6 +334,10 @@ header{
       color: $grey;
       text-decoration: none;
       position: relative;
+
+      &.hide{
+        display: none;
+      }
 
       .hoverlink{
         display: none;

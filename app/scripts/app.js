@@ -5,13 +5,18 @@ angular
     'ngCookies',
     'ngResource',
     'ngSanitize',
-    'ngRoute'
+    'ngRoute',
+    'angular-loading-bar'
   ])
-  .config(['$routeProvider', function ($routeProvider) {
+  .config(['$routeProvider', 'cfpLoadingBarProvider', function ($routeProvider, cfpLoadingBarProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
+        templateUrl: 'views/index.html',
         controller: 'MainCtrl'
+      })
+      .when('/play', {
+        templateUrl: 'views/play.html',
+        controller: 'PlayCtrl'
       })
       .when('/about/', {
         templateUrl: 'views/about.html',
@@ -19,15 +24,19 @@ angular
       })
       .when('/finish/', {
         templateUrl: 'views/finish.html',
-        controller: 'GameCtrl'
+        controller: 'FinishCtrl'
       })
       .otherwise({
         redirectTo: '/'
       });
+
+    cfpLoadingBarProvider.includeBar = false;
   }])
   .run(['$rootScope', function($rootScope){
+
     $rootScope.menuhidden = true;
     $rootScope.username = 'Justin Bieber';
+    $rootScope.isPlaying = false;
 
     $rootScope.toggleMenu = function(){
       $rootScope.menuhidden = !$rootScope.menuhidden;
