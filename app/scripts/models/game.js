@@ -35,15 +35,20 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 		scope.questionGiven = false;
 		$rootScope.isPlaying = true;
 
-		var lat = scope.coords.latitude;
-		var lon = scope.coords.longitude;
+		//var lat = scope.coords.latitude;
+		//var lon = scope.coords.longitude;
+		var lat = 47.809490;
+		var lon = 13.055010;
 
-		var token = 'e9c69cbfb8fc2cb1eb3eb637f6a07b26';
+		var token = '42beedb22b46732fc57c88a6b31424a0';
 		var url = 'http://qapi.herokuapp.com/api/' + lat + '/' + lon + '?token=' + token;
 
-		$http({method: 'GET', url: url})
+		$http({method: 'GET', url: url, cache: false})
 	    .success(
 			function(data) {
+				if(Object.prototype.toString.call(data) === '[object Array]'){
+					data = data[0];
+				}
 				if(!scope.checkRespon(data)){
 					console.log('ERROR: getting wrong data');
 					//TODO: remove fallback
@@ -52,6 +57,7 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 					return;
 				}
 				scope.question = data;
+				console.log(scope.question);
 			}
 		)
 	    .error(
@@ -82,7 +88,7 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 		var rightAnswer;
 		for(var i=0; i<scope.question.answers.length; i++){
 			var a = scope.question.answers[i];
-			if(a.isTrue){
+			if(a.is_true){
 				rightAnswer = a.answer;
 				scope.indexOfRightAnswer = i;
 			}
@@ -92,7 +98,7 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 			scope.rightQuestions++;
 		}
 
-		givenAnswer.isTrue = (answer === rightAnswer);
+		givenAnswer.is_true = (answer === rightAnswer);
 		givenAnswer.rightAnswer = rightAnswer;
 		scope.givenAnswers.push(givenAnswer);
 
@@ -115,12 +121,12 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 
 	Game.prototype.setFallbackQuestions = function(){
 		var questions = [
-			{'question':'Welchen Beruf hat Eberhard Hopf','answers':[{'answer':'Singer, Actor','isTrue':false},{'answer':'Architect','isTrue':false},{'answer':'Politician','isTrue':false},{'answer':'Mathematician','isTrue':true}]},
-			{'question':'Welchen Beruf hat Richard Tauber','answers':[{'answer':'Mathematician','isTrue':false},{'answer':'Architect','isTrue':false},{'answer':'Politician','isTrue':false},{'answer':'Singer, Actor','isTrue':true}]},
-			{'question':'Welchen Beruf hat Richard Neutra','answers':[{'answer':'Politician','isTrue':false},{'answer':'Mathematician','isTrue':false},{'answer':'Architect','isTrue':true},{'answer':'Singer, Actor','isTrue':false}]},
-			{'question':'Welche Art von Musik spielt Wolfgang Amadeus Mozart','answers':[{'answer':'Musical improvisation','isTrue':false},{'answer':'Classical music','isTrue':true},{'answer':'Hard rock','isTrue':false},{'answer':'Serialism','isTrue':false}]},
-			{'question':'Welche Art von Musik spielt Anton Webern','answers':[{'answer':'Musical improvisation','isTrue':false},{'answer':'Classical music','isTrue':false},{'answer':'Serialism','isTrue':true},{'answer':'Hard rock','isTrue':false}]},
-			{'question':'Welche Art von Musik spielt Dealer','answers':[{'answer':'Serialism','isTrue':false},{'answer':'Classical music','isTrue':false},{'answer':'Hard rock','isTrue':true},{'answer':'Musical improvisation','isTrue':false}]}
+			{'question':'Welchen Beruf hat Eberhard Hopf','answers':[{'answer':'Singer, Actor','is_true':false},{'answer':'Architect','is_true':false},{'answer':'Politician','is_true':false},{'answer':'Mathematician','is_true':true}]},
+			{'question':'Welchen Beruf hat Richard Tauber','answers':[{'answer':'Mathematician','is_true':false},{'answer':'Architect','is_true':false},{'answer':'Politician','is_true':false},{'answer':'Singer, Actor','is_true':true}]},
+			{'question':'Welchen Beruf hat Richard Neutra','answers':[{'answer':'Politician','is_true':false},{'answer':'Mathematician','is_true':false},{'answer':'Architect','is_true':true},{'answer':'Singer, Actor','is_true':false}]},
+			{'question':'Welche Art von Musik spielt Wolfgang Amadeus Mozart','answers':[{'answer':'Musical improvisation','is_true':false},{'answer':'Classical music','is_true':true},{'answer':'Hard rock','is_true':false},{'answer':'Serialism','is_true':false}]},
+			{'question':'Welche Art von Musik spielt Anton Webern','answers':[{'answer':'Musical improvisation','is_true':false},{'answer':'Classical music','is_true':false},{'answer':'Serialism','is_true':true},{'answer':'Hard rock','is_true':false}]},
+			{'question':'Welche Art von Musik spielt Dealer','answers':[{'answer':'Serialism','is_true':false},{'answer':'Classical music','is_true':false},{'answer':'Hard rock','is_true':true},{'answer':'Musical improvisation','is_true':false}]}
 		];
 		var rand = Math.floor(Math.random()*questions.length);
 		return questions[rand];
