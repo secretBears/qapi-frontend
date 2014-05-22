@@ -3,8 +3,8 @@
 function addFunctionToNavigator(){
   navigator.geolocation = {
     getCurrentPosition: function(success){
-      var lat = 47.7241255;
-      var lon = 13.0865897;
+      var lat = 47.80949;
+      var lon = 13.05501;
       success({coords: {latitude: lat, longitude: lon}});
     }
   };
@@ -18,14 +18,14 @@ describe('Controller: PlayCtrl', function () {
   var PlayCtrl,
       scope,
       httpBackend,
-      url = 'http://qapi.herokuapp.com/api/47.7241255/13.0865897?token=42beedb22b46732fc57c88a6b31424a0';
+      url = 'http://qapi.herokuapp.com/api/47.80949/13.05501?token=42beedb22b46732fc57c88a6b31424a0';
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope, $injector) {
     //TODO: find a better way
     addFunctionToNavigator();
     //Try it with spyOn
-    //spyOn(navigator, 'geolocation.getCurrentPosition').andReturn({coords: {latitude: 47.7241255, longitude: 13.0865897}});
+    //spyOn(navigator, 'geolocation.getCurrentPosition').andReturn({coords: {latitude: 47.809490, longitude: 13.055010}});
 
     scope = $rootScope.$new();
     PlayCtrl = $controller('PlayCtrl', {

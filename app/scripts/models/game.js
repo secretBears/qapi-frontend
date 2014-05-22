@@ -88,7 +88,7 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 		var rightAnswer;
 		for(var i=0; i<scope.question.answers.length; i++){
 			var a = scope.question.answers[i];
-			if(a.is_true){
+			if(a.isTrue){
 				rightAnswer = a.answer;
 				scope.indexOfRightAnswer = i;
 			}
@@ -98,7 +98,7 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 			scope.rightQuestions++;
 		}
 
-		givenAnswer.is_true = (answer === rightAnswer);
+		givenAnswer.isTrue = (answer === rightAnswer);
 		givenAnswer.rightAnswer = rightAnswer;
 		scope.givenAnswers.push(givenAnswer);
 
@@ -121,12 +121,12 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 
 	Game.prototype.setFallbackQuestions = function(){
 		var questions = [
-			{'question':'Welchen Beruf hat Eberhard Hopf','answers':[{'answer':'Singer, Actor','is_true':false},{'answer':'Architect','is_true':false},{'answer':'Politician','is_true':false},{'answer':'Mathematician','is_true':true}]},
-			{'question':'Welchen Beruf hat Richard Tauber','answers':[{'answer':'Mathematician','is_true':false},{'answer':'Architect','is_true':false},{'answer':'Politician','is_true':false},{'answer':'Singer, Actor','is_true':true}]},
-			{'question':'Welchen Beruf hat Richard Neutra','answers':[{'answer':'Politician','is_true':false},{'answer':'Mathematician','is_true':false},{'answer':'Architect','is_true':true},{'answer':'Singer, Actor','is_true':false}]},
-			{'question':'Welche Art von Musik spielt Wolfgang Amadeus Mozart','answers':[{'answer':'Musical improvisation','is_true':false},{'answer':'Classical music','is_true':true},{'answer':'Hard rock','is_true':false},{'answer':'Serialism','is_true':false}]},
-			{'question':'Welche Art von Musik spielt Anton Webern','answers':[{'answer':'Musical improvisation','is_true':false},{'answer':'Classical music','is_true':false},{'answer':'Serialism','is_true':true},{'answer':'Hard rock','is_true':false}]},
-			{'question':'Welche Art von Musik spielt Dealer','answers':[{'answer':'Serialism','is_true':false},{'answer':'Classical music','is_true':false},{'answer':'Hard rock','is_true':true},{'answer':'Musical improvisation','is_true':false}]}
+			{'question':'Welchen Beruf hat Eberhard Hopf','answers':[{'answer':'Singer, Actor','isTrue':false},{'answer':'Architect','isTrue':false},{'answer':'Politician','isTrue':false},{'answer':'Mathematician','isTrue':true}]},
+			{'question':'Welchen Beruf hat Richard Tauber','answers':[{'answer':'Mathematician','isTrue':false},{'answer':'Architect','isTrue':false},{'answer':'Politician','isTrue':false},{'answer':'Singer, Actor','isTrue':true}]},
+			{'question':'Welchen Beruf hat Richard Neutra','answers':[{'answer':'Politician','isTrue':false},{'answer':'Mathematician','isTrue':false},{'answer':'Architect','isTrue':true},{'answer':'Singer, Actor','isTrue':false}]},
+			{'question':'Welche Art von Musik spielt Wolfgang Amadeus Mozart','answers':[{'answer':'Musical improvisation','isTrue':false},{'answer':'Classical music','isTrue':true},{'answer':'Hard rock','isTrue':false},{'answer':'Serialism','isTrue':false}]},
+			{'question':'Welche Art von Musik spielt Anton Webern','answers':[{'answer':'Musical improvisation','isTrue':false},{'answer':'Classical music','isTrue':false},{'answer':'Serialism','isTrue':true},{'answer':'Hard rock','isTrue':false}]},
+			{'question':'Welche Art von Musik spielt Dealer','answers':[{'answer':'Serialism','isTrue':false},{'answer':'Classical music','isTrue':false},{'answer':'Hard rock','isTrue':true},{'answer':'Musical improvisation','isTrue':false}]}
 		];
 		var rand = Math.floor(Math.random()*questions.length);
 		return questions[rand];
