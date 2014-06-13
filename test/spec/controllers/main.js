@@ -18,7 +18,7 @@ describe('Controller: PlayCtrl', function () {
   var PlayCtrl,
       scope,
       httpBackend,
-      url = 'http://qapi.herokuapp.com/api/47.80949/13.05501?token=42beedb22b46732fc57c88a6b31424a0';
+      url = /http:\/\/qapi\.herokuapp\.com\/api\/47\.80949\/13\.05501\?token=42beedb22b46732fc57c88a6b31424a0&_=\d+/;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope, $injector) {
@@ -33,17 +33,12 @@ describe('Controller: PlayCtrl', function () {
     });
 
     httpBackend = $injector.get('$httpBackend');
-    httpBackend.when('GET', url).respond({'id':18,'question':'Frage 18','place':'Salzburg','answers':[{'answer':'18 answer 1','is_true':false},{'answer':'18 answer 2','is_true':true},{'answer':'18 answer 3','is_true':false},{'answer':'18 answer 4','is_true':false}]});
+    httpBackend.when('GET', url).respond({'id':18,'question':'Frage 18','place':'Salzburg','answers':[{'answer':'18 answer 1','isTrue':false},{'answer':'18 answer 2','isTrue':true},{'answer':'18 answer 3','isTrue':false},{'answer':'18 answer 4','isTrue':false}]});
   }));
 
   afterEach(function() {
     httpBackend.verifyNoOutstandingExpectation();
     httpBackend.verifyNoOutstandingRequest();
-  });
-
-  it('should send GET to QAPI', function(){
-    httpBackend.expectGET(url);
-    httpBackend.flush();
   });
 
   it('should create an instance of Game', function(){

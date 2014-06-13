@@ -42,6 +42,7 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 
 		var token = '42beedb22b46732fc57c88a6b31424a0';
 		var url = 'http://qapi.herokuapp.com/api/' + lat + '/' + lon + '?token=' + token;
+		url += '&_=' + (new Date()).getTime();
 
 		$http({method: 'GET', url: url, cache: false})
 	    .success(
@@ -53,11 +54,11 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 					console.log('ERROR: getting wrong data');
 					//TODO: remove fallback
 					scope.question = scope.setFallbackQuestions();
-					console.log(scope.question);
+					//console.log(scope.question);
 					return;
 				}
 				scope.question = data;
-				console.log(scope.question);
+				//console.log(scope.question);
 			}
 		)
 	    .error(
@@ -65,7 +66,7 @@ angular.module('qapiFrontendApp').factory('Game', ['$http', '$window', '$timeout
 				console.log('ERROR: fetching data from QAPI');
 				//TODO: remove fallback
 				scope.question = scope.setFallbackQuestions();
-				console.log(scope.question);
+				//console.log(scope.question);
 			}
 	    );
 	};
